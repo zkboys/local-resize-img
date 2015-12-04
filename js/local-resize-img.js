@@ -1,4 +1,4 @@
-(function() {
+(function () {
     var JpegMeta = {};
     this.JpegMeta = JpegMeta;
     JpegMeta.parseNum = function parseNum(endian, data, offset, size) {
@@ -135,7 +135,7 @@
         }
         return this;
     };
-    this.JpegMeta.JpegFile.prototype.toString = function() {
+    this.JpegMeta.JpegFile.prototype.toString = function () {
         return "[JpegFile " + this.filename + " " + this.general.type + " " + this.general.pixelWidth + "x" + this.general.pixelHeight + " Depth: " + this.general.depth + "]";
     };
     this.JpegMeta.JpegFile.prototype._SOI_MARKER = '\xff\xd8';
@@ -475,13 +475,16 @@
         var ident = this._binary_data.slice(pos, pos + 5);
         if (ident == this._JFIF_IDENT) {
             this._jfifHandler(mark, pos);
-        } else if (ident == this._JFXX_IDENT) {} else {}
+        } else if (ident == this._JFXX_IDENT) {
+        } else {
+        }
     };
     this.JpegMeta.JpegFile.prototype._app1Handler = function _app1Handler(mark, pos) {
         var ident = this._binary_data.slice(pos, pos + 5);
         if (ident == this._EXIF_IDENT) {
             this._exifHandler(mark, pos + 6);
-        } else {}
+        } else {
+        }
     };
     JpegMeta.JpegFile.prototype._exifHandler = function _exifHandler(mark, pos) {
         if (this.exif !== undefined) {
@@ -574,19 +577,19 @@
         os.ios = os.ipod = true;
         os.version = ipod[2].replace(/_/g, '.');
     }
-    window.htmlEncode = function(text) {
+    window.htmlEncode = function (text) {
         return text.replace(/&/g, '&amp').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
-    window.htmlDecode = function(text) {
-            return text.replace(/&amp;/g, '&').replace(/&quot;/g, '/"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-        }
-        //图片压缩
+    window.htmlDecode = function (text) {
+        return text.replace(/&amp;/g, '&').replace(/&quot;/g, '/"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    }
+    //图片压缩
     var ImageCompresser = {
         /**
          * 检测ios平台是否有做过抽样处理
          * @param {Element} img
          */
-        isIosSubSample: function(img) {
+        isIosSubSample: function (img) {
             var w = img.naturalWidth,
                 h = img.naturalHeight,
                 hasSubSample = false;
@@ -608,7 +611,7 @@
          * @param {Number} w
          * @param {Number} h
          */
-        getIosImageRatio: function(img, w, h) {
+        getIosImageRatio: function (img, w, h) {
             var canvas = document.createElement('canvas'),
                 ctx = canvas.getContext('2d'),
                 data,
@@ -640,7 +643,7 @@
          *      quality {Number}    目标图片压缩质量
          *      orien {Number}      目标图片旋转方向
          */
-        getImageBase64: function(img, _opts) {
+        getImageBase64: function (img, _opts) {
             //合并默认配置
 
             var opts = {
@@ -727,7 +730,7 @@
          * @param {Number} height 高度
          * @param {Number} orientation 旋转角度[1|2|3|4|5|6|7|8]
          */
-        doAutoRotate: function(canvas, width, height, orientation) {
+        doAutoRotate: function (canvas, width, height, orientation) {
             var ctx = canvas.getContext('2d');
             if (orientation >= 5 && orientation <= 8) {
                 canvas.width = height;
@@ -781,7 +784,7 @@
          * 获取文件地址
          * @param {File} file
          */
-        getFileObjectURL: function(file) {
+        getFileObjectURL: function (file) {
             var URL = window.URL || window.webkitURL || false;
             if (URL) {
                 return URL.createObjectURL(file);
@@ -791,12 +794,12 @@
         /**
          * 是否支持本地压缩
          */
-        support: function() {
+        support: function () {
             return typeof(window.File) && typeof(window.FileList) && typeof(window.FileReader) && typeof(window.Blob);
         }
     };
     //
-    var JPEGEncoder = function(quality) {
+    var JPEGEncoder = function (quality) {
         var self = this;
         var fround = Math.round;
         var ffloor = Math.floor;
@@ -1167,7 +1170,9 @@
             }
             var end0pos = 63;
             for (;
-                (end0pos > 0) && (DU[end0pos] == 0); end0pos--) {};
+                (end0pos > 0) && (DU[end0pos] == 0); end0pos--) {
+            }
+            ;
             if (end0pos == 0) {
                 writeBits(EOB);
                 return DC;
@@ -1177,7 +1182,8 @@
             while (i <= end0pos) {
                 var startpos = i;
                 for (;
-                    (DU[i] == 0) && (i <= end0pos); ++i) {}
+                    (DU[i] == 0) && (i <= end0pos); ++i) {
+                }
                 var nrzeroes = i - startpos;
                 if (nrzeroes >= I16) {
                     lng = nrzeroes >> 4;
@@ -1203,7 +1209,7 @@
             }
         }
 
-        this.encode = function(image, quality) {
+        this.encode = function (image, quality) {
             var time_start = new Date().getTime();
             if (quality) setQuality(quality);
             byteout = new Array();
@@ -1314,7 +1320,8 @@
             quality: 0.75,
             maxWidth: 960,
             maxHeight: 960,
-            success: function() {}
+            success: function () {
+            }
         };
         options = $.extend({}, defaults, options);
         var files = options.files,
@@ -1333,7 +1340,7 @@
             var reader = new FileReader();
             var orientation = 1;
             reader.readAsBinaryString(file);
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 var result = this.result;
                 // 如果是jpg格式图片，读取图片拍摄方向,自动旋转
                 if (file.type == 'image/jpeg') {
@@ -1353,7 +1360,7 @@
                 var blob = URL.createObjectURL(file);
                 var img = new Image();
                 img.src = blob;
-                img.onload = function(e) {
+                img.onload = function (e) {
                     // 生成结果
                     var base64 = ImageCompresser.getImageBase64(this, {
                         maxW: maxWidth,
@@ -1362,7 +1369,8 @@
                         orien: orientation
                     });
                     if (typeof(options.input.attr("data-maxCount")) != "undefined") {
-                        var maxCount = options.input.attr("data-maxCount");;
+                        var maxCount = options.input.attr("data-maxCount");
+                        ;
                         maxCount = maxCount ? parseInt(maxCount) : null;
                         if (maxCount) {
                             maxCount = maxCount - 1;
@@ -1381,11 +1389,11 @@
             };
         }
     };
-    (function($, window, document, undefined) {
-        $.fn.localResizeImg = function(options) {
+    (function ($, window, document, undefined) {
+        $.fn.localResizeImg = function (options) {
             var el = $(this);
             var before = options.before;
-            el.on('change', function(e) {
+            el.on('change', function (e) {
                 if (!ImageCompresser.support()) {
                     alert("您的设备不支持图片上传");
                     return false;
@@ -1402,10 +1410,12 @@
                         maxCount: maxCount
                     });
                     if (result === false) {
+                        el.val('');
                         return el;
                     }
                 }
                 if (maxCount <= 0) {
+                    el.val('');
                     return el;
                 }
                 options.files = files;

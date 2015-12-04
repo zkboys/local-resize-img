@@ -11,10 +11,28 @@
     <script src="dist/js/local-resize-img.min.js"></script>
     <script>
         $(function () {
-            $('#local-resize-img').localResizeImg({
+            $('#single-img').localResizeImg({
                 quality: 0.75, // 图片压缩比例
-                maxWidth: 60, //图片最大宽度
-                maxHeight: 60,// 图片最大高度
+                maxWidth: 260, //图片最大宽度
+                maxHeight: 260,// 图片最大高度
+                before: function (options) {//return false 可以阻止后续操作。
+                    // do something
+                },
+                success: function (data) {
+                    var base64 = data.base64; //可以作为img src属性值的数据
+                    var clearBase64 = data.clearBase64; //传给后台，后台用来生成图片的数据。
+                    var $img = $('<img src="" alt="">');
+                    $img.attr('src', base64);
+                    $('body').append($img);
+                    var $input = $('<input type="hidden" name="img-data" value="">');
+                    $input.val(clearBase64);
+                    $('body').append($input);
+                }
+            });
+            $('#multiple-img').localResizeImg({
+                quality: 0.75, // 图片压缩比例
+                maxWidth: 260, //图片最大宽度
+                maxHeight: 260,// 图片最大高度
                 before: function (options) {//return false 可以阻止后续操作。
                     var maxCount = options.maxCount;
                     if (options.files.length > maxCount) {
@@ -27,10 +45,8 @@
                     }
                 },
                 success: function (data) {
-                    console.log(data.maxCount);
                     var base64 = data.base64; //可以作为img src属性值的数据
                     var clearBase64 = data.clearBase64; //传给后台，后台用来生成图片的数据。
-
                     var $img = $('<img src="" alt="">');
                     $img.attr('src', base64);
                     $('body').append($img);
@@ -44,7 +60,8 @@
 </head>
 
 <body>
-<input id="local-resize-img" type="file" name="file" value="" multiple data-maxCount="5">
+<input id="single-img" type="file" name="file" value="">
+<input id="multiple-img" type="file" name="file" value="" multiple data-maxCount="5">
 </body>
 
 </html>
