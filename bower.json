@@ -9,8 +9,5 @@
     "local-resize",
     "image",
     "img"
-  ],
-  "dependencies": {
-    "jquery": "~2.1.4"
-  }
+  ]
 }
