@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title></title>
+    <style type="text/css">
+
+    </style>
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <script src="dist/js/local-resize-img.min.js"></script>
+    <script>
+        $(function () {
+            $('#local-resize-img').localResizeImg({
+                quality: 0.75, // 图片压缩比例
+                maxWidth: 60, //图片最大宽度
+                maxHeight: 60,// 图片最大高度
+                before: function (options) {//return false 可以阻止后续操作。
+                    var maxCount = options.maxCount;
+                    if (options.files.length > maxCount) {
+                        if (maxCount <= 0) {
+                            alert('图片太多了，不能再传了！');
+                            return false;
+                        }
+                        alert('您最多能再选择' + maxCount + '张图片！');
+                        return false;
+                    }
+                },
+                success: function (data) {
+                    console.log(data.maxCount);
+                    var base64 = data.base64; //可以作为img src属性值的数据
+                    var clearBase64 = data.clearBase64; //传给后台，后台用来生成图片的数据。
+
+                    var $img = $('<img src="" alt="">');
+                    $img.attr('src', base64);
+                    $('body').append($img);
+                    var $input = $('<input type="hidden" name="img-data" value="">');
+                    $input.val(clearBase64);
+                    $('body').append($input);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+<input id="local-resize-img" type="file" name="file" value="" multiple data-maxCount="5">
+</body>
+
+</html>

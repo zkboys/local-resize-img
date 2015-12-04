@@ -1,0 +1,16 @@
+{
+  "name": "local-resize-img",
+  "version": "0.0.1",
+  "license": "MIT",
+  "ignore": [
+  ],
+  "keywords": [
+    "upload",
+    "local-resize",
+    "image",
+    "img"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
