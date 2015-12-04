@@ -1,8 +1,15 @@
-# local-resize-img
-浏览器本地处理图片
+# 浏览器端处理图片
+## 功能描述
+- 浏览器本地压缩图片
+- 浏览器本地调整图片大小
+- 针对android或者ios做了兼容处理
+- 根据手机拍摄角度，自动旋转图片
+
 ## 安装：
 bower install local-resize-img
+
 或
+
 git clone https://github.com/zkboys/local-resize-img.git
 ## 使用：
 ###单图上传：
