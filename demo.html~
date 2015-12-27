@@ -21,7 +21,7 @@
                 success: function (data) {
                     var base64 = data.base64; //可以作为img src属性值的数据
                     var clearBase64 = data.clearBase64; //传给后台，后台用来生成图片的数据。
-		    console.log(clearBase64);
+			console.log(clearBase64);
                     var $img = $('<img src="" alt="">');
                     $img.attr('src', base64);
                     $('body').append($img);
